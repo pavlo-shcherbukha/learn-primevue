@@ -178,6 +178,10 @@ npm run dev
 
 ```
 
-## Making different grids
+## Making different grids without [Composistion api](https://vuejs.org/guide/extras/composition-api-faq.html)
+
+For this exersize 
+
+
 
 

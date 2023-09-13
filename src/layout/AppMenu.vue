@@ -11,25 +11,36 @@ const model = ref([
         to: '/pages',
         items: [
             {
-                label: 'Crud',
+                label: 'Example Crud',
                 icon: 'pi pi-fw pi-pencil',
                 to: '/pages/crud'
             },
             {
-                label: 'Timeline',
-                icon: 'pi pi-fw pi-calendar',
-                to: '/pages/timeline'
+                label: 'Example input',
+                icon: 'pi pi-fw pi-pencil',
+                to: '/pages/shinput'
             },
             {
-                label: 'Empty',
-                icon: 'pi pi-fw pi-circle-off',
+                label: 'Example Empty page',
+                icon: 'pi pi-fw pi-pencil',
                 to: '/pages/empty'
             },
             {
-                label: 'MyGrid',
-                icon: 'pi pi-fw pi-circle-off',
+                label: 'My empty page for tsts',
+                icon: 'pi pi-fw pi-link',
+                to: '/pages/shempty'
+            },
+            {
+                label: 'Grid one row select',
+                icon: 'pi pi-fw pi-link',
                 to: '/pages/shgrid'
+            },
+            {
+                label: 'Grid MultiRowSelect',
+                icon: 'pi pi-fw pi-link',
+                to: '/pages/shgridmulti'
             }
+      
 
         ]
     }

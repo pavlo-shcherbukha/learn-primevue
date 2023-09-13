@@ -9,9 +9,14 @@ const router = createRouter({
             component: AppLayout,
             children: [
                 {
-                    path: '/pages/timeline',
-                    name: 'timeline',
-                    component: () => import('@/views/pages/Timeline.vue')
+                    path: '/pages/crud',
+                    name: 'crud',
+                    component: () => import('@/views/pages/Crud.vue')
+                },
+                {
+                    path: '/pages/shinput',
+                    name: 'input',
+                    component: () => import('@/views/pages/Input.vue')
                 },
                 {
                     path: '/pages/empty',
@@ -19,15 +24,22 @@ const router = createRouter({
                     component: () => import('@/views/pages/Empty.vue')
                 },
                 {
-                    path: '/pages/crud',
-                    name: 'crud',
-                    component: () => import('@/views/pages/Crud.vue')
+                    path: '/pages/shempty',
+                    name: 'my empty page for tests',
+                    component: () => import('@/views/pages/ShEmpty.vue')
                 },
                 {
                     path: '/pages/shgrid',
-                    name: 'MY PAGE',
+                    name: 'Grid OneRow',
                     component: () => import('@/views/pages/SHTable.vue')
-                }
+                },
+                {
+                    path: '/pages/shgridmulti',
+                    name: 'Grid MultiRowSelect',
+                    component: () => import('@/views/pages/SHTableMulti.vue')
+                },
+       
+
 
             ]
         }
