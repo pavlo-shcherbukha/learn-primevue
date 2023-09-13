@@ -178,10 +178,52 @@ npm run dev
 
 ```
 
+
+## The main menu
+
+For learning I am using  the main menu with the next signs [pic-01](#pic-01)
+
+<kbd><img src="doc/pic-01.png" /></kbd>
+<p style="text-align: center;"><a name="pic-01">pic-01</a></p>
+
+
 ## Making different grids without [Composistion api](https://vuejs.org/guide/extras/composition-api-faq.html)
 
-For this exersize 
+For this exercise I am using the folowing documentation:
+
+- [DataTable](https://primevue.org/datatable/)
+- [DataTable events](https://primevue.org/datatable/#api.datatable.events)
+- [DropDown](https://primevue.org/dropdown/)
+- [Button](https://primevue.org/button/)
+- [Toolbar](https://primevue.org/toolbar/)
+- [Toast](https://primevue.org/toast/)
+
+###  Grid one row select
+
+This is a simple grid which is used to show table and move across the rows. I am using the radioButton for row selection. This is nothing special, just a table with one row select.
+The **Toast** component is shown which row  selected
+
+
+<kbd><img src="doc/pic-02.png" /></kbd>
+<p style="text-align: center;"><a name="pic-02">pic-02</a></p>
+
+A am focusing more on  the idea how to read selected row. How this problem solwed is shown on the [pic-03](#pic-03):
 
 
 
+<kbd><img src="doc/pic-03.png" /></kbd>
+<p style="text-align: center;"><a name="pic-03">pic-03</a></p>
 
+
+###  Grid MultiRow select
+
+A am focusing more on  the idea how to read selected rows.  Also, I am using [DropDown](https://primevue.org/dropdown/) for watching selected rows. On the [pic-04](#pic-04) is shown the contens of the window.
+
+<kbd><img src="doc/pic-04.png" /></kbd>
+<p style="text-align: center;"><a name="pic-04">pic-04</a></p>
+
+
+How this problem solwed is shown on the [pic-05](#pic-05):
+
+<kbd><img src="doc/pic-05.png" /></kbd>
+<p style="text-align: center;"><a name="pic-05">pic-05</a></p>
