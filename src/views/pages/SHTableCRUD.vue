@@ -156,8 +156,8 @@
 
             findIndexById(id){
                 let index = -1;
-                for (let i = 0; i < products.value.length; i++) {
-                    if (products.value[i].id === id) {
+                for (let i = 0; i < this.tabledata.length; i++) {
+                    if (this.tabledata[i].id === id) {
                         index = i;
                         break;
                     }
@@ -173,10 +173,32 @@
         
             },
             saveTodo(){
-                this.todoDialogRow = {};
-                this.todoDialog = false;
+                let todoid = this.todoDialogRow.id;
+                let index=this.findIndexById( todoid );
+                if (index > -1){
+                    this.tabledata[index] = this.todoDialogRow;
+                    this.todoDialogRow = {};
+                    this.todoDialog = false;
+                    this.$toast.add(
+                                    {
+                                    severity: 'info', 
+                                    summary: 'Data stored', 
+                                    detail: `rowid=${todoid}  index=${index}` , 
+                                    life: 3000}
+                                );
 
-            }          
+                } else {
+                      this.$toast.add(
+                                    {
+                                    severity: 'error', 
+                                    summary: 'Data not stored', 
+                                    detail: `rowid=${todoid}  index=${index}` , 
+                                    life: 3000}
+                                );
+                    this.todoDialogRow = {};
+                    this.todoDialog = false;
+                }
+            },          
    
    
         }

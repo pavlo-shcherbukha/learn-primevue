@@ -271,3 +271,165 @@ and then we recive  row data in funtion:
 and assigns rowdata to special variable  **todoDialogRow**.
 
 
+- Designing the edit dialog.
+
+In this dialog all fields are created  using div with **class="field"** 
+
+```html
+
+<!-- Edit DIALOG -->
+        <Dialog v-model:visible="todoDialog" :style="{ width: '450px' }" header="Todo Details" :modal="true" class="p-fluid">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                    <span>EDIT DIALOG</span>
+                </div>
+                <div class="field">
+                        <label for="id">id todo</label>
+                        <InputText id="id" v-model.trim="todoDialogRow.id" required="true" autofocus :class="{ 'p-invalid': submitted && !todoDialogRow.id }" />
+                        <small class="p-invalid" v-if="submitted && !todoDialogRow.id">id is required.</small>
+                </div>
+                <div class="field">
+                        <label for="user_id">user_id</label>
+                        <InputText id="user_id" v-model.trim="todoDialogRow.user_id" required="true" autofocus :class="{ 'p-invalid': submitted && !todoDialogRow.user_id }" />
+                        <small class="p-invalid" v-if="submitted && !todoDialogRow.user_id">user_id is required.</small>
+                </div>
+                <div class="field">
+                        <label for="title"></label>
+                        <Textarea id="title" v-model="todoDialogRow.title" required="true" rows="3" cols="20" />
+                </div>
+                <div class="field">
+                        <label for="due_on"></label>
+                        <small class="p-invalid" v-if="submitted && !todoDialogRow.due_on">due_on is required.</small>
+                        <Calendar v-model="todoDialogRow.due_on" dateFormat="yy-mm-dd" showIcon />
+                </div>
+                <div class="field">
+                        <label for="status"></label>
+                        <small class="p-invalid" v-if="submitted && !todoDialogRow.status">status is required.</small>
+                        <Dropdown id="status" v-model="todoDialogRow.status" :options="statuses" optionLabel="label"  optionValue="value" placeholder="Select a Status">
+                            <template #value="slotProps">
+                               <div v-if="slotProps.value && slotProps.value.value">
+                                    <span :class="'product-badge status-' + slotProps.value.value">{{ slotProps.value.label }}</span>
+                                </div>
+                                <div v-else-if="slotProps.value && !slotProps.value.value">
+                                    <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{ slotProps.value }}</span>
+                                </div>
+                                <span v-else>
+                                    {{ slotProps.placeholder }}
+                                </span>
+                            </template>
+                        </Dropdown>
+
+
+                </div>
+            <template #footer>
+                <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
+                <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveTodo" />
+            </template>
+        </Dialog>        
+
+```
+
+For date entering we use  object [Calendar](https://primevue.org/calendar/). To use date in the custom format it is better using localisation [PrimeVue Locale](https://primevue.org/configuration/#locale). In this example I am using en locale with customised date format: 
+
+```json
+import en from  '@/en.json';
+const app = createApp(App);
+app.use(router);
+app.use(PrimeVue, { ripple: true});
+PrimeVue.locale = en;
+
+```
+In the project is placed Ukrainian locale **uk.json**.
+
+
+- Next thing is [DropDown](https://primevue.org/dropdown/)
+
+
+```html
+
+    <Dropdown id="status" v-model="todoDialogRow.status" :options="statuses" optionLabel="label"  optionValue="value" placeholder="Select a Status">
+        <template #value="slotProps">
+            <div v-if="slotProps.value && slotProps.value.value">
+                <span :class="'product-badge status-' + slotProps.value.value">{{ slotProps.value.label }}</span>
+            </div>
+            <div v-else-if="slotProps.value && !slotProps.value.value">
+                <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{ slotProps.value }}</span>
+            </div>
+            <span v-else>
+                {{ slotProps.placeholder }}
+            </span>
+        </template>
+    </Dropdown>
+
+```
+
+The **options** is referencing on the dropdown dictionary variable:
+
+```js
+    statuses: [
+                { label: 'PENDING', value: 'pending' },
+                { label: 'COMPLITED', value: 'completed' },
+                { label: 'IN PROGRESS', value: 'inprogress' }
+    ]
+
+```
+
+The **optionLabel** is referencing on the field which should be shown in dropdown.
+The **optionValue**  is referencing on the field which should be used as data in dropdown. In case of miss this whole record from dictionary will be assigned.
+
+- Place edited row in the table under correct index.
+For this purpose is used functions
+
+```js
+saveTodo(){
+    let todoid = this.todoDialogRow.id;
+    let index=this.findIndexById( todoid );
+    if (index > -1){
+        this.tabledata[index] = this.todoDialogRow;
+        this.todoDialogRow = {};
+        this.todoDialog = false;
+        this.$toast.add(
+                        {
+                        severity: 'info', 
+                        summary: 'Data stored', 
+                        detail: `rowid=${todoid}  index=${index}` , 
+                        life: 3000}
+                    );
+
+    } else {
+            this.$toast.add(
+                        {
+                        severity: 'error', 
+                        summary: 'Data not stored', 
+                        detail: `rowid=${todoid}  index=${index}` , 
+                        life: 3000}
+                    );
+        this.todoDialogRow = {};
+        this.todoDialog = false;
+    }
+},            
+
+```
+and 
+
+```js 
+findIndexById(id){
+    let index = -1;
+    for (let i = 0; i < this.tabledata.length; i++) {
+        if (this.tabledata[i].id === id) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+},
+
+```
+
+
+
+
+
+
+
+
