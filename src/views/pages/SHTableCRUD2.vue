@@ -1,13 +1,13 @@
 <template>
     <Toast />
     <div class="card">
-        <h2> The simple grid with CRUD only one edit dialog</h2>
+        <h2> The simple grid with CRUD</h2>
         <p> <a href="https://primevue.org/datatable/" target="_blank">primeview datatable</a> </p>
          <Toolbar class="mb-4">
                <template v-slot:start>
                         <div class="my-2">
-                            <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
-                            <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
+                            <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="createTodo" />
+                            <Button label="Delete" icon="pi pi-trash" class="p-button-danger" @click="deleteTodos" />
 
                          </div>
                 </template>
@@ -40,7 +40,7 @@
             <Column headerStyle="min-width:10rem;">
                 <template #body="slotProps">
                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="EditTodo(slotProps.data)" />
-                    <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="ConfirmDelTodo(slotProps.data)" />
+                    <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="ConfirmDeleteTodo(slotProps.data)" />
                 </template>
             </Column>
         </DataTable>
@@ -93,7 +93,17 @@
                 <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
                 <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveTodo" />
             </template>
-        </Dialog>        
+        </Dialog>  
+        <Dialog v-model:visible="todoDeleteDialog" :style="{ width: '450px' }" header="Confirm Delete record" :modal="true">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                        <span v-if="todoDeleteDialogRow">Are you sure you want to <b>delete</b> <br/><b>id={{ todoDeleteDialogRow.id }}</b> <br/> <b>title = {{todoDeleteDialogRow.title}}</b>? <br/></span>
+                    </div>
+                    <template #footer>
+                        <Button label="No" icon="pi pi-times" class="p-button-text" @click="todoDeleteDialog = false" />
+                        <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteTodo" />
+                    </template>
+        </Dialog>      
      
     </div>
 </template>
@@ -116,7 +126,9 @@
                             { label: 'PENDING', value: 'pending' },
                             { label: 'COMPLITED', value: 'completed' },
                             { label: 'IN PROGRESS', value: 'inprogress' }
-                ]
+                ],
+                todoDeleteDialog: false,
+                todoDeleteDialogRow:{},
             }
         },
         created(){
@@ -188,17 +200,44 @@
                                 );
 
                 } else {
-                      this.$toast.add(
+                    this.tabledata.push( this.todoDialogRow );
+                    this.$toast.add(
                                     {
-                                    severity: 'error', 
-                                    summary: 'Data not stored', 
+                                    severity: 'info', 
+                                    summary: 'New data added', 
                                     detail: `rowid=${todoid}  index=${index}` , 
                                     life: 3000}
                                 );
                     this.todoDialogRow = {};
                     this.todoDialog = false;
                 }
-            },          
+            },  
+            ConfirmDeleteTodo(delrow){
+                this.todoDeleteDialogRow=delrow;
+                this.todoDeleteDialog=true;
+            },
+            deleteTodo(){
+
+                let todoid = this.todoDeleteDialogRow.id;
+                let index=this.findIndexById( todoid );
+                if (index > -1){
+                    let deleted = this.tabledata.splice( index, 1);
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Todo Deleted: ' + JSON.stringify(deleted), life: 3000 });
+
+                }
+                this.todoDeleteDialog=false;
+                this.todoDeleteDialogRow={};    
+                
+
+            },
+            deleteTodos(){
+                this.$toast.add({ severity: 'error', summary: 'Function not implemented', detail: 'This fnction is not implemented!', life: 3000 });
+
+            },
+            createTodo(){
+                this.todoDialogRow = {};
+                this.todoDialog = true;
+            },        
    
    
         }

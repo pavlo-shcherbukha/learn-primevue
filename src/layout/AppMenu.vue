@@ -44,9 +44,13 @@ const model = ref([
                 label: 'CRUD operation 1',
                 icon: 'pi pi-fw pi-link',
                 to: '/pages/shtablecrud'
+            },
+            {
+                label: 'CRUD operation 2',
+                icon: 'pi pi-fw pi-link',
+                to: '/pages/shtablecrud2'
             }
       
-
         ]
     }
 ]);

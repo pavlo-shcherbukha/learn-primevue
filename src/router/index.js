@@ -42,6 +42,11 @@ const router = createRouter({
                     path: '/pages/shtablecrud',
                     name: 'CRUD operation 1',
                     component: () => import('@/views/pages/SHTableCRUD.vue')
+                },
+                {
+                    path: '/pages/shtablecrud2',
+                    name: 'CRUD operation 2',
+                    component: () => import('@/views/pages/SHTableCRUD2.vue')
                 }
 
 
