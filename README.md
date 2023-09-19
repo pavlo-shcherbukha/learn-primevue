@@ -227,3 +227,47 @@ How this problem solwed is shown on the [pic-05](#pic-05):
 
 <kbd><img src="doc/pic-05.png" /></kbd>
 <p style="text-align: center;"><a name="pic-05">pic-05</a></p>
+
+### Grid and CRUD operation
+
+CRUD operation  is developed based on [Dialog](https://primevue.org/dialog/) component. This example is not the best approach but is suitable in some cases. This example is dealing with  the  records  in the table on the frontend side (not with the records in the database). But it helps me   build dialogs and working with fields.
+The main component is **views/pages/SHTableCRUD.vue**.
+The records are loaded in the table using the way as in previous examples. The edit window is shown on [pic-06](#pic-06). 
+
+<kbd><img src="doc/pic-06.png" /></kbd>
+<p style="text-align: center;"><a name="pic-06">pic-06</a></p>
+
+The main idea is to use  the most  required edit components: input field, input date, input dropdown.
+Let's dip in details. 
+
+- For using one dialog we need: one wariable which controls hide/show dialog. 
+On the [pic-07](#pic-07) you can see the variable **todoDialog** and how it can be used when we want show or hide dialog. 
+
+<kbd><img src="doc/pic-07.png" /></kbd>
+<p style="text-align: center;"><a name="pic-07">pic-07</a></p>
+
+- We have to pass one row from table into dialog.
+For this purpose is used [slots in Column component](https://primevue.org/datatable/#api.column.slots.body).
+We creates the virtual column with slot "body" and pass slot property **data** on the  buton **@click** event
+
+```html
+            <Column headerStyle="min-width:10rem;">
+                <template #body="slotProps">
+                    <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="EditTodo(slotProps.data)" />
+                    <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="ConfirmDelTodo(slotProps.data)" />
+                </template>
+            </Column>
+
+```
+and then we recive  row data in funtion:
+
+```js
+    EditTodo(editTodo){
+                this.todoDialogRow =  editTodo ;
+                this.todoDialog = true;
+    }
+
+```
+and assigns rowdata to special variable  **todoDialogRow**.
+
+

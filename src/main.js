@@ -104,11 +104,15 @@ import VirtualScroller from 'primevue/virtualscroller';
 //import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
+import en from  '@/en.json';
 
 const app = createApp(App);
 
 app.use(router);
-app.use(PrimeVue, { ripple: true });
+
+app.use(PrimeVue, { ripple: true});
+PrimeVue.locale = en;
+
 app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);

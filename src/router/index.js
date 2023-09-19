@@ -38,7 +38,11 @@ const router = createRouter({
                     name: 'Grid MultiRowSelect',
                     component: () => import('@/views/pages/SHTableMulti.vue')
                 },
-       
+                {
+                    path: '/pages/shtablecrud',
+                    name: 'CRUD operation 1',
+                    component: () => import('@/views/pages/SHTableCRUD.vue')
+                }
 
 
             ]

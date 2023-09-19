@@ -39,6 +39,11 @@ const model = ref([
                 label: 'Grid MultiRowSelect',
                 icon: 'pi pi-fw pi-link',
                 to: '/pages/shgridmulti'
+            },
+            {
+                label: 'CRUD operation 1',
+                icon: 'pi pi-fw pi-link',
+                to: '/pages/shtablecrud'
             }
       
 
